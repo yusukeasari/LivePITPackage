@@ -1,0 +1,7 @@
+.web {
+    display: none;
+    visibility:hidden;
+}
+.print{
+    display: block;
+}

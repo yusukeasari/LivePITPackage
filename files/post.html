@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=360" />
+<title>LIVEPIT</title>
+<style type="text/css">
+<!--
+
+body {
+	background-color:#000;
+	font-size: 85%;
+	font-family:'メイリオ',Meiryo,Arial,'ＭＳ Ｐゴシック', 'MS PGothic',sans-serif;
+}
+#nowSending {
+	line-height: 1.5;
+	color:#FFF;
+}
+-->
+</style>
+<script src="jquery.js"></script>
+<script src="megapix-image.js"></script>
+<script>
+outputMaxSize=400;
+
+var imgFile;
+var image = new Image();
+var reader = new FileReader();
+var file;
+
+var maxHeight;
+var maxWidth;
+isiPhone=false;
+
+window.addEventListener("load", function(){
+	setTimeout("scrollTo(0,1)",100);
+	$(window).bind("orientationchange",function(){
+		window.location.reload();
+		setTimeout("scrollTo(0,1)",100);
+	})
+
+
+	$('#nowSending').hide();
+	var agent = navigator.userAgent;
+
+	if(agent.search(/iPhone/) != -1) isiPhone=true;
+	
+	//iPhoneではない
+	if(!isiPhone){
+	
+		$('#nowSending').hide();
+		document.getElementById("imageFile").addEventListener("change", function(){
+			file = document.getElementById("imageFile").files[0];
+			reader.readAsDataURL(file);
+			$('#imageFile').hide();
+			$('#nowSending').show();
+		});
+		reader.onload = function(evt) {
+			var difx=0;
+			var dify=0;
+			//alert(window.orientation);
+			switch(window.orientation){
+				case 90:
+					rotDig=0;
+	
+					break;
+				case 180:
+					rotDig=90;
+					dify=-1;
+					break;
+				case -90:
+					rotDig=180;
+					difx=-1;
+					dify=-1;
+					break;
+				case 0:
+					//tDig=0;
+					rotDig=90;
+					dify=-1;
+					break;
+				default:
+					rotDig=0;
+					break;
+			}
+			image.onload = function() {
+				var rate;
+				//alert(image.width+" > "+image.height);
+				if(image.width > image.height && (window.orientation != 0 && window.orientation != 180)){
+					rate = outputMaxSize/image.width;
+					outputWidth=outputMaxSize;
+					outputHeight=Math.floor(image.height*rate);
+					
+					delWidth=(outputWidth-outputHeight)/-2;
+					delHeight=0;
+					displaySize=outputHeight;
+					//alert("yoko");
+	
+					//alert(delWidth+"/"+delHeight+"/"+displaySize+"/"+displaySize);
+					$("#canvas").attr("width",displaySize);   
+					$("#canvas").attr("height",displaySize);
+	
+					var canvas = $("#canvas");
+					rot = rotDig/180*Math.PI;
+					var ctx = canvas[0].getContext("2d");   
+					ctx.rotate(rot);
+					ctx.translate(displaySize*difx,displaySize*dify)
+	
+					//alert("ctx.drawImage(image, "+delWidth+", "+delHeight+","+outputWidth+","+outputHeight+")");
+					ctx.drawImage(image, delWidth, delHeight,outputWidth,outputHeight);
+					var type = 'image/jpeg';  
+					var image2=new Image();
+					
+					image2.onload = function(){
+						imgFile=canvas[0].toDataURL(type);
+						fileUpload();
+					}
+					image2.src=canvas[0].toDataURL(type);
+					
+				}else{
+					imageHeight=image.width;
+					imageWidth=image.height;
+					rate = outputMaxSize/imageHeight;
+					outputWidth=outputMaxSize;
+					outputHeight=Math.floor(imageWidth*rate);
+					
+					delWidth=(outputWidth-outputHeight)/-2;
+					delHeight=0;
+					displaySize=outputHeight;
+					//alert("tate");
+	
+					//alert(delWidth+"/"+delHeight+"/"+displaySize+"/"+displaySize);
+					$("#canvas").attr("width",displaySize);   
+					$("#canvas").attr("height",displaySize);
+	
+					var canvas = $("#canvas");
+					rot = rotDig/180*Math.PI;
+					var ctx = canvas[0].getContext("2d");   
+					ctx.rotate(rot);
+					ctx.translate(displaySize*difx,displaySize*dify);
+	
+					//alert("ctx.drawImage(image, "+delWidth+", "+delHeight+","+outputWidth+","+outputHeight+")");
+					ctx.drawImage(image, delWidth, delHeight,outputWidth,outputHeight-(delWidth*2));
+					var type = 'image/jpeg';  
+					var image2=new Image();
+					
+					image2.onload = function(){
+						imgFile=canvas[0].toDataURL(type);
+						fileUpload();
+					}
+					image2.src=canvas[0].toDataURL(type);
+					/*
+					rate = outputMaxSize/image.height;
+					outputHeight=outputMaxSize;
+					outputWidth=Math.floor(image.width*rate);
+	
+					delWidth=0;
+					delHeight=(outputHeight-outputWidth)/2;
+					displaySize=outputWidth;
+					alert("tate");
+					*/
+				}
+				
+	
+			}
+	
+	
+			image.src = evt.target.result;
+			//imgFile=evt.target.result;
+		}
+		
+	}else{
+		//iPhone
+	  var fileInput = document.getElementById('imageFile');
+	  fileInput.onchange = function() {
+		$('#imageFile').hide();
+		var file = fileInput.files[0];
+		var mpImg = new MegaPixImage(file);
+
+		var canvas = document.getElementById('resultImage');
+		canvas.onload = function(){
+			imgFile=canvas.src;
+			fileUpload();
+		}
+
+		mpImg.render(document.getElementById('resultImage'), { maxWidth: 340, maxHeight: 340 ,orientation: 6});
+		
+	  }
+	}
+
+}, true);
+	function fileUpload(){
+		var fd = new FormData();
+		fd.append("image", imgFile);
+		
+		$.ajax({
+			url: "preview_miz.php",
+			type: "POST",
+			data: fd,
+			processData: false,	// dataをそのまま送信させる
+			contentType: false,
+			success: function(ret){
+				$('#imageFile').show();
+				$('#nowSending').hide();
+
+				alert(ret);
+			}
+		});
+	}
+function Sleep( T ){ 
+   var d1 = new Date().getTime(); 
+   var d2 = new Date().getTime(); 
+   while( d2 < d1+1000*T ){    //T秒待つ 
+       d2=new Date().getTime(); 
+   } 
+   return; 
+} 
+</script>
+</head>
+	
+	<body>
+		<form>
+			<input type="file" name="image" accept="image/*" id="imageFile"/>
+		</form>
+        <div id="nowSending"><img src="loadinfo.net.gif" align="baseline" /> 送信中です</div>
+		<div id="result"/>
+		 <canvas id="canvas" width="1" height="1"></canvas><img id="resultImage"><br />
+         <div id="completeMessage">送信が完了しました！</div>
+        <!--<a href="javascript:void(0);" onclick="javascript:fileUpload();">UPLOAD</a>-->
+	</body>
+</html>

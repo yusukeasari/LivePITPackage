@@ -1,0 +1,10 @@
+body {
+    width:100%;
+    margin:0;
+    padding:0;
+    color:#000000;
+    font-family: "メイリオ", Meiryo, "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "ＭＳ Ｐゴシック", "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+    line-height: 18px;
+    background: #000000 url(../img/background.jpg) no-repeat center top;
+    background-size: 100% 100%;
+}
