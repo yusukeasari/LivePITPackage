@@ -7,7 +7,7 @@ TMP_DIR = `files/`
 if [ -e ${HOME_DIR}${HTML_DIR}${TMP_DIR} ]
 then
 	echo "tmp dir already exists."
-    exit 0
+	exit 0
 else
 
 	git clone https://github.com/yusukeasari/LivePITPackage.git ${HOME_DIR}${HTML_DIR}${TMP_DIR}
@@ -33,3 +33,4 @@ echo -n "縦ブロック数："
 read INPUT
 sed -i -e "s/0000/INPUT/g" setup2016.json.txt
 sed -i -e "s/0000/INPUT/g" app/mid.json
+
