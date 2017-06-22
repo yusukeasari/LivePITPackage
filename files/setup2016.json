@@ -7,8 +7,8 @@
 
 "stageWidth":1024,
 "stageHeight":800,
-"blockX":70,
-"blockY":95,
+"blockX":0000,
+"blockY":0000,
 "tileWidth":256,
 "tileHeight":256,
 
@@ -19,8 +19,8 @@
 "blockSizePerZoomX":[8,8,16,32,64],
 "blockSizePerZoomY":[8,8,16,32,64],
 "zoomRate":[1,1,2,3,4],
-"swfData":"http://live.pitcom.jp/swfData/",
-"blockImg":"http://live.pitcom.jp/splitedge/blockimg/pituser/live/web/",
+"swfData":"http://DOMAIN/swfData/",
+"blockImg":"http://DOMAIN/splitedge/blockimg/pituser/SUBDOMAIN/web/",
 "blockImage":"blockimg/",
 "commentDir":"blockjson/",
 "searchDir":"",

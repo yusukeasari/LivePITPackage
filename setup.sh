@@ -2,7 +2,7 @@
 
 HOME_DIR = `/home/pituser/`
 HTML_DIR = `public_html/`
-TMP_DIR = `tmp/`
+TMP_DIR = `files/`
 
 if [ -e ${HOME_DIR}${HTML_DIR}${TMP_DIR} ]
 then
@@ -17,3 +17,19 @@ else
 
 	rm -rf ${HOME_DIR}${HTML_DIR}${TMP_DIR}
 
+
+#
+echo -n "サブドメインを入力："
+read INPUT
+sed -i -e "s/DOMAIN/$INPUT/g" setup2016.json.txt
+sed -i -e "s/DOMAIN/$INPUT/g" app/mid.json
+
+echo -n "縦ブロック数："
+read INPUT
+sed -i -e "s/0000/$INPUT/g" setup2016.json.txt
+sed -i -e "s/0000/$INPUT/g" app/mid.json
+
+echo -n "縦ブロック数："
+read INPUT
+sed -i -e "s/0000/INPUT/g" setup2016.json.txt
+sed -i -e "s/0000/INPUT/g" app/mid.json
