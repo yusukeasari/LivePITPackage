@@ -8,7 +8,7 @@ mb_language("uni");
 mb_internal_encoding("UTF-8");
 mb_detect_order("ASCII,JIS,EUC-JP,SJIS,UTF-8");
 
-require_once("/home/pituser/public_html/pitadmin/current.php");
+require_once("HOMEDIR/public_html/pitadmin/current.php");
 // 以下4ファイルは必ずrequireする。
 require_once(BASE_URI."/common/common.php");
 require_once(BASE_URI."/common/common_db.php");
@@ -66,7 +66,7 @@ fclose($fp);
 
 sleep(3);
 	// @todo 画像をアップロードした場所からorigフォルダ、resizeフォルダへコピー
-	$testPath = "/home/pituser/public_html/ipad_demo/data/".$fname.".jpg";
+	$testPath = "HOMEDIR/public_html/ipad_demo/data/".$fname.".jpg";
 	$toPath = ORIG_DIR_PATH."/{$fileName}";
 	copy($testPath, $toPath);
 	chmod($toPath, 0666);
