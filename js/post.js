@@ -24,7 +24,8 @@
             if (data.isOk) {
               return $('#loadImage').attr('src', "collage/result/" + _id.slice(1) + ".png?" + Math.floor(Math.random() * 10000)).load(function() {
                 $('#loadImage').show();
-                return showSnsButton();
+                showSnsButton();
+                return $('#postId').text(_id);
               }).error(function() {});
             }
           }
@@ -53,7 +54,8 @@
             if (data.isOk) {
               return $('#loadImage').attr('src', "collage/result/" + $('#SearchPanelInnerContents #id').val().slice(1) + ".png?" + Math.floor(Math.random() * 10000)).load(function() {
                 $('#loadImage').show();
-                return showSnsButton();
+                showSnsButton();
+                return $('#postId').text(_id);
               }).error(function() {});
             }
           }
@@ -72,9 +74,19 @@
     })(this);
     setSnsButton = (function(_this) {
       return function(_id) {
-        var lineURL, twitterURL;
-        lineURL = "http://line.me/R/msg/text/?" + encodeURIComponent("http://live.pitcom.jp/post.php#indi/" + _id + "/");
-        return twitterURL = "https://twitter.com/intent/tweet?url=" + encodeURIComponent("http://live.pitcom.jp/post.php#indi/" + _id + "/");
+        var fbURL, lineURL, twitterURL;
+        lineURL = "http://line.me/R/msg/text/?" + encodeURIComponent("http://livepit2.pitcom.jp/post.php#indi/" + _id + "/");
+        twitterURL = "https://twitter.com/intent/tweet?url=" + encodeURIComponent("http://livepit2.pitcom.jp/post.php#indi/" + _id + "/");
+        fbURL = "https://www.facebook.com/sharer.php?u=" + encodeURIComponent("http://livepit2.pitcom.jp/post.php#indi/" + _id + "/");
+        $('#snsLineButton').click(function() {
+          return window.location.href = lineURL;
+        });
+        $('#snsTwitterButton').click(function() {
+          return window.location.href = twitterURL;
+        });
+        return $('#snsFacebookButton').click(function() {
+          return window.location.href = fbURL;
+        });
       };
     })(this);
     hideQrImage = (function(_this) {
