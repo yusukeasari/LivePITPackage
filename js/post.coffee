@@ -23,6 +23,18 @@ $(window).load ->
 				setQrImage(_id)
 				# 処理
 				if data.isOk
+					$('#postId').text $('#SearchPanelInnerContents #id').val()
+
+					$('#downloadLink a').
+						attr('href',"collage/result/"+_id.slice(1)+".png")
+					$('#downloadLink a').on 'click', ->
+						hrefPath = $(this).attr('href');	   
+						fileName = $(this).attr('href').replace(/\\/g,'/').replace(/.*\//,'')
+						 
+						$target = $(e.target)
+						$target.attr
+							download: fileName,
+							href: hrefPath
 					$('#loadImage').
 						attr('src',"collage/result/"+_id.slice(1)+".png?"+Math.floor(Math.random()*10000)).
 						load( =>
@@ -57,6 +69,20 @@ $(window).load ->
 				setQrImage($('#SearchPanelInnerContents #id').val())
 				setSnsButton($('#SearchPanelInnerContents #id').val().slice(1))
 				if data.isOk
+					$('#postId').text $('#SearchPanelInnerContents #id').val()
+
+					$('#downloadLink a').
+						attr('href',"collage/result/"+_id.slice(1)+".png")
+						attr('download',"collage/result/"+_id.slice(1)+".png")
+					$('#downloadLink a').on 'click', ->
+						hrefPath = $(this).attr('href');	   
+						fileName = $(this).attr('href').replace(/\\/g,'/').replace(/.*\//,'')
+						 
+						$target = $(e.target)
+						$target.attr
+							download: fileName,
+							href: hrefPath
+
 					$('#loadImage').
 						attr('src',"collage/result/"+$('#SearchPanelInnerContents #id').val().slice(1)+".png?"+Math.floor(Math.random()*10000)).
 						load( =>
@@ -96,7 +122,7 @@ $(window).load ->
 		#
 	setQrImage = (_id)=>
 			$('#qrImage').
-				attr('src','lib/qr_img.php?d='+encodeURIComponent("http://live.pitcom.jp/post.php#indi/#{_id}/?utm_source=framecollage&utm_medium=qr&utm_campaign=#{_id}")+'&e=M&t=P&'+Math.floor(Math.random()*10000)).
+				attr('src','lib/qr_img.php?d='+encodeURIComponent("http://livepit2.pitcom.jp/post.php#indi/#{_id}/?utm_source=framecollage&utm_medium=qr&utm_campaign=#{_id}")+'&e=M&t=P&'+Math.floor(Math.random()*10000)).
 				load( =>
 					showQrImage()
 				)

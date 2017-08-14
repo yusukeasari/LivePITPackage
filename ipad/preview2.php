@@ -112,6 +112,14 @@ sleep(3);
 // statusの各値はcommon.phpのステータスを参照
 $imPost->setTblData($db, $arrPostData); 
 
+$arrData = array(
+	"client_id" => CLIENT_ID,
+	"data_id" => $mid,
+	"enq_num" => 2,
+	"enq_text" => 'Staff iPad'
+);
+$imPost->setOptData($db, $arrData);
+
 
 if(REALTIME_FLAG){
 	$options = array(

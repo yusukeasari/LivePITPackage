@@ -22,6 +22,18 @@
             setSnsButton(_id);
             setQrImage(_id);
             if (data.isOk) {
+              $('#postId').text($('#SearchPanelInnerContents #id').val());
+              $('#downloadLink a').attr('href', "collage/result/" + _id.slice(1) + ".png");
+              $('#downloadLink a').on('click', function() {
+                var $target, fileName, hrefPath;
+                hrefPath = $(this).attr('href');
+                fileName = $(this).attr('href').replace(/\\/g, '/').replace(/.*\//, '');
+                $target = $(e.target);
+                return $target.attr({
+                  download: fileName,
+                  href: hrefPath
+                });
+              });
               return $('#loadImage').attr('src', "collage/result/" + _id.slice(1) + ".png?" + Math.floor(Math.random() * 10000)).load(function() {
                 $('#loadImage').show();
                 showSnsButton();
@@ -52,6 +64,19 @@
             setQrImage($('#SearchPanelInnerContents #id').val());
             setSnsButton($('#SearchPanelInnerContents #id').val().slice(1));
             if (data.isOk) {
+              $('#postId').text($('#SearchPanelInnerContents #id').val());
+              $('#downloadLink a').attr('href', "collage/result/" + _id.slice(1) + ".png");
+              attr('download', "collage/result/" + _id.slice(1) + ".png");
+              $('#downloadLink a').on('click', function() {
+                var $target, fileName, hrefPath;
+                hrefPath = $(this).attr('href');
+                fileName = $(this).attr('href').replace(/\\/g, '/').replace(/.*\//, '');
+                $target = $(e.target);
+                return $target.attr({
+                  download: fileName,
+                  href: hrefPath
+                });
+              });
               return $('#loadImage').attr('src', "collage/result/" + $('#SearchPanelInnerContents #id').val().slice(1) + ".png?" + Math.floor(Math.random() * 10000)).load(function() {
                 $('#loadImage').show();
                 showSnsButton();
@@ -101,7 +126,7 @@
     })(this);
     return setQrImage = (function(_this) {
       return function(_id) {
-        return $('#qrImage').attr('src', 'lib/qr_img.php?d=' + encodeURIComponent("http://live.pitcom.jp/post.php#indi/" + _id + "/?utm_source=framecollage&utm_medium=qr&utm_campaign=" + _id) + '&e=M&t=P&' + Math.floor(Math.random() * 10000)).load(function() {
+        return $('#qrImage').attr('src', 'lib/qr_img.php?d=' + encodeURIComponent("http://livepit2.pitcom.jp/post.php#indi/" + _id + "/?utm_source=framecollage&utm_medium=qr&utm_campaign=" + _id) + '&e=M&t=P&' + Math.floor(Math.random() * 10000)).load(function() {
           return showQrImage();
         });
       };

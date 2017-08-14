@@ -11,8 +11,6 @@ $resultDir = 'collage/result/';
 
 if(!file_exists($collageBaseImage)) error_log("{$_SERVER['PHP_SELF']} ERROR:base image not found.");
 
-
-
 if(!empty($_GET['id'])){
 	$id = substr($_GET['id'], 1, 5);
 	if(file_exists("{$requestImageDir}{$id}.jpg")){
@@ -32,3 +30,4 @@ if(!empty($_GET['id'])){
 		error_log("{$_SERVER['PHP_SELF']} ERROR:id or image not found.");
 	}
 }
+
